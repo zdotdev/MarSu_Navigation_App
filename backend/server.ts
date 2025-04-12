@@ -12,17 +12,7 @@ import { credentials } from "./middleware/credential";
 import { cors_option } from "./config/cors_option";
 import { global_error_handler } from "./util/error_handler";
 
-// const authRouter = require("./routes/auth.js");
-// const businessRouter = require("./routes/business.js");
-// const eventRouter = require("./routes/event.js");
-// const saleRouter = require("./routes/sale.js");
-// const userRouter = require("./routes/user.js");
-// const violationRouter = require("./routes/violation.js");
-// const businessViolationRouter = require("./routes/businessViolation.js");
-// const notificationRouter = require("./routes/notification.js");
-// const uploadRouter = require("./routes/upload.js");
-// const boothRouter = require("./routes/booth.js");
-// const productRouter = require("./routes/product.js");
+import user_route from "./route/user";
 
 config();
 
@@ -42,17 +32,7 @@ app.use(credentials);
 app.use(cors(cors_option));
 app.use(cookieParser());
 
-// app.use("/api/auth", authRouter);
-// app.use("/api/business", businessRouter);
-// app.use("/api/event", eventRouter);
-// app.use("/api/sale", saleRouter);
-// app.use("/api/user", userRouter);
-// app.use("/api/violation", violationRouter);
-// app.use("/api/business-violation", businessViolationRouter);
-// app.use("/api/notification", notificationRouter);
-// app.use("/api/upload", uploadRouter);
-// app.use("/api/booth", boothRouter);
-// app.use("/api/product", productRouter);
+app.use("/api/user", user_route);
 
 app.use(express.static(path.join(__dirname, "dist")));
 app.use("/uploads", express.static("uploads"));
