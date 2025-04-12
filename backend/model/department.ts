@@ -25,7 +25,7 @@ const Department_Schema = new mongoose.Schema(
         required: true,
         trim: true,
     },
-    contact_person_information: {
+    contact_person_title: {
         type: String,
         required: true,
         trim: true,

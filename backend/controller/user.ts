@@ -1,7 +1,7 @@
 import { User } from "../model/user";
 import bcrypt from "bcrypt";
 import { Request, Response, NextFunction } from "express";
-import { sign_up_schema, sign_in_schema } from "../zod/auth";
+import { sign_up_schema, sign_in_schema } from "../zod/user";
 import { User_Interface } from "../interface/user";
 
 function getUserInfo(user: User_Interface) {

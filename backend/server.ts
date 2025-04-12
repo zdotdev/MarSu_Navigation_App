@@ -13,6 +13,7 @@ import { cors_option } from "./config/cors_option";
 import { global_error_handler } from "./util/error_handler";
 
 import user_route from "./route/user";
+import department_route from "./route/department";
 
 config();
 
@@ -33,6 +34,7 @@ app.use(cors(cors_option));
 app.use(cookieParser());
 
 app.use("/api/user", user_route);
+app.use("/api/department", department_route);
 
 app.use(express.static(path.join(__dirname, "dist")));
 app.use("/uploads", express.static("uploads"));
