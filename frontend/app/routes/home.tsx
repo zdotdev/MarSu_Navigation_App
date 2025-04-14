@@ -1,5 +1,7 @@
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -9,5 +11,14 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <Welcome />;
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate('/dashboard');
+  }, []);
+  return (
+    <>
+      <div className="h-screen">
+      </div>
+    </>
+  );
 }
