@@ -21,7 +21,6 @@ export default function Dashboard() {
           <p className="text-2xl">Guiding your steps at MarSU</p>
         </div>
       </div>
-      <div className="w-full h-20 bg-gray-200"></div>
       {/* search area */}
       <div className="flex flex-col justify-center items-center w-full h-full">
         <div className="flex flex-col justify-center items-center w-full h-56 bg-red-950">
