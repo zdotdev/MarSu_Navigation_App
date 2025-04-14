@@ -1,8 +1,31 @@
 import Background from "~/lib/assets/bg.jpg";
 import Logo from "~/lib/assets/logo_1.png";
 import Card from "~/components/custom/card/card";
+import { useEffect, useState } from "react";
+interface DepartmentData {
+  _id?: string;
+  title: string;
+  description: string;
+  image: string;
+  contact_person_name: string;
+  contact_person_email: string;
+  contact_person_title: string;
+}
 
 export default function Dashboard() {
+  const [departments, setDepartments] = useState<DepartmentData[]>([]);
+  useEffect(() => {
+      const fetchDepartments = async () => {
+        try {
+          const response = await fetch("http://localhost:6900/api/department");
+          const data = await response.json();
+          setDepartments(data.department || []);
+        } catch (error) {
+          console.error("Failed to fetch departments", error);
+        }
+      };
+      fetchDepartments();
+    }, []);
   return (
     <>
       {/* dashboard area */}
@@ -38,9 +61,11 @@ export default function Dashboard() {
       <div className="flex pb-16 flex-col justify-center items-center w-full h-full bg-gray-200">
         <h2 className="text-4xl text-center font-bold mt-8">Departments</h2>
         <div className="flex flex-wrap justify-center items-center gap-4 mt-4">
-          <Card img="/path/to/image.jpg" title="Department 1" />
-          <Card img="/path/to/image.jpg" title="Department 1" />
-          <Card img="/path/to/image.jpg" title="Department 1" />
+          {departments.map((department) => (
+            <a href={`department/${department._id}`}>
+              <Card img={department.image} title={department.title} />
+            </a>
+          ))}
         </div>
       </div>
     </>

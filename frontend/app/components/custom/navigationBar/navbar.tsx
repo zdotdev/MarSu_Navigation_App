@@ -10,7 +10,9 @@ export default function Navbar() {
           <Menu />
         </div>
         <div className="flex justify-center items-center">
-          <img className="h-10 aspect-square" src={logo} alt="logo" />
+          <a href="/dashboard">
+            <img className="h-10 aspect-square" src={logo} alt="logo" />
+          </a>
         </div>
         <div className="flex items-center">
           <Theme />

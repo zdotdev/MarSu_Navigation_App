@@ -5,7 +5,7 @@ import { create_department, get_all_department, get_department, update_departmen
 
 router.get("/", get_all_department as (req: Request, res: Response, next: NextFunction) => void);
 router.post("/", create_department  as (req: Request, res: Response, next: NextFunction) => void);
-router.post("/:id", get_department as (req: Request, res: Response, next: NextFunction) => void);
+router.get("/:id", get_department as (req: Request, res: Response, next: NextFunction) => void);
 router.put("/:id", update_department as (req: Request, res: Response, next: NextFunction) => void);
 router.delete("/:id", delete_department as (req: Request, res: Response, next: NextFunction) => void);
 

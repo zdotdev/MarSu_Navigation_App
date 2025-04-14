@@ -110,12 +110,14 @@ export default function Admin() {
                       name="title"
                       type="test"
                       value={department.title}
+                      className="w-full px-3 py-2 border rounded-md"
                     />
                     <input
                       placeholder="Description"
                       name="description"
                       type="textarea"
                       value={department.description}
+                      className="w-full px-3 py-2 border rounded-md"
                     />
                     <input
                       placeholder="Image"
@@ -129,20 +131,27 @@ export default function Admin() {
                       name="contact_person_name"
                       type="text"
                       value={department.contact_person_name}
+                      className="w-full px-3 py-2 border rounded-md"
                     />
                     <input
                       placeholder="Contact Email"
                       name="contact_person_email"
                       type="email"
                       value={department.contact_person_email}
+                      className="w-full px-3 py-2 border rounded-md"
                     />
                     <input
                       placeholder="Contact Title"
                       name="contact_person_title"
                       type="text"
                       value={department.contact_person_title}
+                      className="w-full px-3 py-2 border rounded-md"
                     />
-                    <Button type="submit">Update Department</Button>
+                    <div className="w-fit">
+                      <Button type="submit" className="w-full">
+                        Update Department
+                      </Button>
+                    </div>
                   </form>
                   <form onSubmit={handleSubmit} className="pt-2">
                     <input type="hidden" name="_action" value="delete" />
@@ -170,17 +179,11 @@ export default function Admin() {
                 <form className="space-y-4 mt-4" onSubmit={handleSubmit}>
                   <input type="hidden" name="_action" value="update" />
                   <input type="hidden" name="id" />
-                  <input
-                    placeholder="Title"
-                    name="title"
-                    type="test"
-                    
-                  />
+                  <input placeholder="Title" name="title" type="test" />
                   <input
                     placeholder="Description"
                     name="description"
                     type="textarea"
-                    
                   />
                   <input
                     placeholder="Image"
@@ -193,19 +196,16 @@ export default function Admin() {
                     placeholder="Contact Name"
                     name="contact_person_name"
                     type="text"
-                    
                   />
                   <input
                     placeholder="Contact Email"
                     name="contact_person_email"
                     type="email"
-                    
                   />
                   <input
                     placeholder="Contact Title"
                     name="contact_person_title"
                     type="text"
-                    
                   />
                   <Button type="submit">Add Department</Button>
                 </form>
