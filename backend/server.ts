@@ -14,6 +14,8 @@ import { global_error_handler } from "./util/error_handler";
 
 import user_route from "./route/user";
 import department_route from "./route/department";
+import notification_route from "./route/notification";
+import location_route from "./route/location"
 
 config();
 
@@ -35,6 +37,8 @@ app.use(cookieParser());
 
 app.use("/api/user", user_route);
 app.use("/api/department", department_route);
+app.use("/api/notification", notification_route);
+app.use("/api/location", location_route);
 
 app.use(express.static(path.join(__dirname, "dist")));
 app.use("/uploads", express.static("uploads"));

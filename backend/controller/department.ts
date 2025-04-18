@@ -1,7 +1,6 @@
 import { Department } from "../model/department";
 import { Request, Response, NextFunction } from "express";
 import { department_schema } from "../zod/department";
-import { Department_Interface } from "../interface/department";
 import mongoose from "mongoose";
 
 export const create_department = async (req: Request, res: Response, next: NextFunction) => {
