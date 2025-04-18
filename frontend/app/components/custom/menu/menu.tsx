@@ -16,7 +16,7 @@ export default function Menu() {
               <MenuIcon />
             </MenubarTrigger>
             <MenubarContent>
-              <a className="flex justify-center" href="/sample">
+              <a className="flex justify-center" href="/navigation">
                 Navigation
               </a>
             </MenubarContent>
