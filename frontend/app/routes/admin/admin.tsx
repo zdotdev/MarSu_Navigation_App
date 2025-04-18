@@ -10,6 +10,15 @@ import {
   DialogTrigger,
 } from "~/components/ui/dialog";
 import { Button } from "~/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "~/components/ui/table";
 
 interface DepartmentData {
   _id?: string;
@@ -20,16 +29,31 @@ interface DepartmentData {
   contact_person_email: string;
   contact_person_title: string;
 }
+interface LocationData {
+  _id?: string;
+  location_name: string;
+  latitude: string;
+  longtitude: string;
+}
 
 export default function Admin() {
   const [departments, setDepartments] = useState<DepartmentData[]>([]);
+  const [locations, setLocations] = useState<LocationData[]>([]);
 
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        const response = await fetch("http://localhost:6900/api/department");
-        const data = await response.json();
-        setDepartments(data.department || []);
+        const departmentResponse = await fetch(
+          "http://localhost:6900/api/department"
+        );
+        const locationResponse = await fetch(
+          "http://localhost:6900/api/location"
+        );
+        const departmentData = await departmentResponse.json();
+        const locationData = await locationResponse.json();
+
+        setDepartments(departmentData.department || []);
+        setLocations(locationData.location || []);
       } catch (error) {
         console.error("Failed to fetch departments", error);
       }
@@ -88,6 +112,52 @@ export default function Admin() {
     }
   };
 
+  const handleSubmitLocation = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const intent = formData.get("_action") as string;
+    const id = formData.get("id") as string;
+
+    const payload: LocationData = {
+      location_name: formData.get("location_name") as string,
+      latitude: formData.get("latitude") as string,
+      longtitude: formData.get("longtitude") as string,
+    };
+
+    try {
+      let url = "http://localhost:6900/api/location";
+      let method = "POST";
+
+      if (intent === "update") {
+        url += `/${id}`;
+        method = "PUT";
+      } else if (intent === "delete") {
+        url += `/${id}`;
+        method = "DELETE";
+      }
+
+      const options: RequestInit = {
+        method,
+        headers: { "Content-Type": "application/json" },
+      };
+
+      if (intent !== "delete") {
+        options.body = JSON.stringify(payload);
+      }
+
+      const response = await fetch(url, options);
+      if (!response.ok) throw new Error("Failed operation");
+
+      alert("Success!");
+      window.location.reload();
+    } catch (err) {
+      alert(`Error during ${intent}`);
+    }
+  };
+
   return (
     <div className="p-8">
       <div className="flex flex-wrap gap-4 justify-center">
@@ -109,14 +179,14 @@ export default function Admin() {
                       placeholder="Title"
                       name="title"
                       type="test"
-                      value={department.title}
+                      defaultValue={department.title}
                       className="w-full px-3 py-2 border rounded-md"
                     />
                     <input
                       placeholder="Description"
                       name="description"
                       type="textarea"
-                      value={department.description}
+                      defaultValue={department.description}
                       className="w-full px-3 py-2 border rounded-md"
                     />
                     <input
@@ -130,21 +200,21 @@ export default function Admin() {
                       placeholder="Contact Name"
                       name="contact_person_name"
                       type="text"
-                      value={department.contact_person_name}
+                      defaultValue={department.contact_person_name}
                       className="w-full px-3 py-2 border rounded-md"
                     />
                     <input
                       placeholder="Contact Email"
                       name="contact_person_email"
                       type="email"
-                      value={department.contact_person_email}
+                      defaultValue={department.contact_person_email}
                       className="w-full px-3 py-2 border rounded-md"
                     />
                     <input
                       placeholder="Contact Title"
                       name="contact_person_title"
                       type="text"
-                      value={department.contact_person_title}
+                      defaultValue={department.contact_person_title}
                       className="w-full px-3 py-2 border rounded-md"
                     />
                     <div className="w-fit">
@@ -208,6 +278,136 @@ export default function Admin() {
                     type="text"
                   />
                   <Button type="submit">Add Department</Button>
+                </form>
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+      </div>
+
+      <div className="pt-8">
+        <p>Locations</p>
+        <Table>
+          <TableCaption>A list of Locations.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Location name</TableHead>
+              <TableHead>Latitude</TableHead>
+              <TableHead>Longtitude</TableHead>
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {locations.map((location) => (
+              <TableRow key={location._id}>
+                <TableCell className="font-medium">
+                  {location.location_name}
+                </TableCell>
+                <TableCell>{location.latitude}</TableCell>
+                <TableCell>{location.longtitude}</TableCell>
+                <TableCell className="flex gap-2 items-center">
+                  <Dialog key={location._id}>
+                    <DialogTrigger asChild>
+                      <Button>Edit</Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Edit Location</DialogTitle>
+                        <DialogDescription>
+                          <form
+                            className="space-y-4 mt-4"
+                            onSubmit={handleSubmitLocation}
+                          >
+                            <input
+                              type="hidden"
+                              name="_action"
+                              value="update"
+                            />
+                            <input
+                              type="hidden"
+                              name="id"
+                              value={location._id}
+                            />
+                            <input
+                              placeholder="Location name"
+                              name="location_name"
+                              type="text"
+                              defaultValue={location.location_name}
+                              className="w-full px-3 py-2 border rounded-md"
+                            />
+                            <input
+                              placeholder="Latitude"
+                              name="latitude"
+                              type="text"
+                              defaultValue={location.latitude}
+                              className="w-full px-3 py-2 border rounded-md"
+                            />
+                            <input
+                              placeholder="Longtitude"
+                              name="longtitude"
+                              type="text"
+                              defaultValue={location.longtitude}
+                              className="w-full px-3 py-2 border rounded-md"
+                            />
+                            <div className="w-fit">
+                              <Button type="submit" className="w-full">
+                                Update Location
+                              </Button>
+                            </div>
+                          </form>
+                        </DialogDescription>
+                      </DialogHeader>
+                    </DialogContent>
+                  </Dialog>
+                  <form onSubmit={handleSubmitLocation}>
+                    <input type="hidden" name="_action" value="delete" />
+                    <input type="hidden" name="id" value={location._id} />
+                    <Button type="submit" variant="destructive">
+                      Delete
+                    </Button>
+                  </form>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+
+        <Dialog>
+          <DialogTrigger>
+            <Button>Add Location</Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>New Location</DialogTitle>
+              <DialogDescription>
+                <form
+                  className="space-y-4 mt-4"
+                  onSubmit={handleSubmitLocation}
+                >
+                  <input type="hidden" name="_action" value="" />
+                  <input
+                    placeholder="Location name"
+                    name="location_name"
+                    type="text"
+                    className="w-full px-3 py-2 border rounded-md"
+                  />
+                  <input
+                    placeholder="Latitude"
+                    name="latitude"
+                    type="text"
+                    className="w-full px-3 py-2 border rounded-md"
+                  />
+                  <input
+                    placeholder="Longtitude"
+                    name="longtitude"
+                    type="text"
+                    className="w-full px-3 py-2 border rounded-md"
+                  />
+                  <div className="w-fit">
+                    <Button type="submit" className="w-full">
+                      Save Location
+                    </Button>
+                  </div>
                 </form>
               </DialogDescription>
             </DialogHeader>
