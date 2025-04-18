@@ -6,6 +6,7 @@ interface DepartmentData {
   _id?: string;
   title: string;
   description: string;
+  campus_zone: string;
   image: string;
   contact_person_name: string;
   contact_person_email: string;
@@ -44,10 +45,10 @@ export default function Dashboard() {
             alt="Logo.png"
           />
           <div className="text-center space-y-4">
-            <h1 className="font-extrabold text-5xl md:text-7xl text-white drop-shadow-lg">
+            <h1 className="font-extrabold text-5xl md:text-7xl text-white drop-shadow-lg [text-shadow:_2px_2px_0_rgb(0_0_0)]">
               Welcome to Guide U!
             </h1>
-            <p className="text-2xl md:text-3xl text-white font-medium drop-shadow-md">
+            <p className="text-2xl md:text-3xl text-gray-200 font-medium drop-shadow-md">
               Guiding your steps at MarSU
             </p>
           </div>
@@ -58,11 +59,11 @@ export default function Dashboard() {
         <div className="flex flex-col justify-center items-center w-full h-40 md:h-56 bg-red-950">
           <div className="flex flex-col justify-center items-center p-4">
             <h1 className="text-2xl md:text-4xl text-white text-center">
-              Looking for department?
+              Looking for Facility?
             </h1>
             <input
               type="text"
-              placeholder="Search department..."
+              placeholder="Search facility..."
               className="mt-4 px-4 py-2 w-full md:w-64 rounded-lg border-2 bg-gray-200 border-red-950 focus:outline-none focus:border-gray-300"
               onChange={(e) => {
                 const searchTerm = e.target.value.toLowerCase();
@@ -77,13 +78,31 @@ export default function Dashboard() {
       </div>
       {/* department area */}
       <div className="flex pb-16 flex-col justify-center items-center w-full h-full bg-gray-200">
-        <h2 className="text-4xl text-center font-bold mt-8">Departments</h2>
+        <h2 className="text-4xl text-center font-bold mt-8">
+          Campus Facilities
+        </h2>
         <div className="flex flex-wrap justify-center items-center gap-4 mt-4">
-          {departments.map((department) => (
-            <a href={`department/${department._id}`}>
-              <Card img={department.image} title={department.title} />
-            </a>
-          ))}
+            {Object.entries(
+            departments.reduce((acc, department) => {
+              const zone = department.campus_zone || 'Other';
+              if (!acc[zone]) acc[zone] = [];
+              acc[zone].push(department);
+              return acc;
+            }, {} as Record<string, DepartmentData[]>)
+            )
+            .sort(([zoneA], [zoneB]) => zoneA.localeCompare(zoneB))
+            .map(([zone, zoneDepartments]) => (
+              <div key={zone} className="w-full px-4">
+              <h3 className="text-2xl font-semibold mb-4 text-red-950">{zone}</h3>
+              <div className="flex flex-wrap gap-4 mb-8">
+                {zoneDepartments.map((department) => (
+                <a key={department._id} href={`department/${department._id}`}>
+                  <Card img={department.image} title={department.title} />
+                </a>
+                ))}
+              </div>
+              </div>
+            ))}
         </div>
       </div>
     </>

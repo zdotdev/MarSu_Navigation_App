@@ -24,6 +24,7 @@ interface DepartmentData {
   _id?: string;
   title: string;
   description: string;
+  campus_zone: string;
   image: string;
   contact_person_name: string;
   contact_person_email: string;
@@ -75,6 +76,7 @@ export default function Admin() {
     const payload: DepartmentData = {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
+      campus_zone: formData.get("campus_zone") as string,
       image: imageBase64 || "",
       contact_person_name: formData.get("contact_person_name") as string,
       contact_person_email: formData.get("contact_person_email") as string,
@@ -220,7 +222,7 @@ export default function Admin() {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Edit Department</DialogTitle>
+                <DialogTitle>Edit Facility</DialogTitle>
                 <DialogDescription>
                   <form className="space-y-4 mt-4" onSubmit={handleSubmit}>
                     <input type="hidden" name="_action" value="update" />
@@ -237,6 +239,13 @@ export default function Admin() {
                       name="description"
                       type="textarea"
                       defaultValue={department.description}
+                      className="w-full px-3 py-2 border rounded-md"
+                    />
+                    <input
+                      placeholder="Campus zone"
+                      name="campus_zone"
+                      type="text"
+                      defaultValue={department.campus_zone}
                       className="w-full px-3 py-2 border rounded-md"
                     />
                     <input
@@ -269,7 +278,7 @@ export default function Admin() {
                     />
                     <div className="w-fit">
                       <Button type="submit" className="w-full">
-                        Update Department
+                        Update Facility
                       </Button>
                     </div>
                   </form>
@@ -290,20 +299,24 @@ export default function Admin() {
       <div className="flex justify-end mt-8">
         <Dialog>
           <DialogTrigger>
-            <Button>Add Department</Button>
+            <Button>Add Facility</Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>New Department</DialogTitle>
+              <DialogTitle>New Facility</DialogTitle>
               <DialogDescription>
                 <form className="space-y-4 mt-4" onSubmit={handleSubmit}>
-                  <input type="hidden" name="_action" value="update" />
-                  <input type="hidden" name="id" />
-                  <input placeholder="Title" name="title" type="test" />
+                  <input type="hidden" name="_action" />
+                  <input placeholder="Title" name="title" type="text" />
                   <input
                     placeholder="Description"
                     name="description"
                     type="textarea"
+                  />
+                  <input
+                    placeholder="Campus zone"
+                    name="campus_zone"
+                    type="text"
                   />
                   <input
                     placeholder="Image"
@@ -327,7 +340,7 @@ export default function Admin() {
                     name="contact_person_title"
                     type="text"
                   />
-                  <Button type="submit">Add Department</Button>
+                  <Button type="submit">Add Facility</Button>
                 </form>
               </DialogDescription>
             </DialogHeader>
@@ -338,7 +351,7 @@ export default function Admin() {
       <div className="pt-8">
         <p>Locations</p>
         <Table>
-          <TableCaption>A list of Locations.</TableCaption>
+          <TableCaption>List of Locations.</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead>Location name</TableHead>
@@ -434,7 +447,7 @@ export default function Admin() {
                   className="space-y-4 mt-4"
                   onSubmit={handleSubmitLocation}
                 >
-                  <input type="hidden" name="_action" value="" />
+                  <input type="hidden" name="_action" />
                   <input
                     placeholder="Location name"
                     name="location_name"

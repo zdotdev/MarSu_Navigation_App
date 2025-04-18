@@ -4,7 +4,7 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "~/components/ui/menubar";
-import { Menu as MenuIcon } from "lucide-react";
+import { Menu as MenuIcon, Navigation, School } from "lucide-react";
 
 export default function Menu() {
   return (
@@ -16,11 +16,18 @@ export default function Menu() {
               <MenuIcon />
             </MenubarTrigger>
             <MenubarContent>
-              <a className="flex justify-center" href="/navigation">
-                Navigation
+              <a
+                className="flex gap-2 items-center justify-center"
+                href="/navigation"
+              >
+                <Navigation /> Navigation
               </a>
-              <a className="flex justify-center" href="/building-info">
-                Building Info
+              <a
+                className="flex gap-2 items-center justify-center"
+                href="/building-info"
+              >
+                <School />
+                Campus Directory
               </a>
             </MenubarContent>
           </MenubarMenu>

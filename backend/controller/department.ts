@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 
 export const create_department = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { title, description, image, contact_person_name, contact_person_email, contact_person_title } = req.body;
+        const { title, description, campus_zone, image, contact_person_name, contact_person_email, contact_person_title } = req.body;
         
         const parsed_body = department_schema.safeParse(req.body);
         if (!parsed_body.success) {
@@ -23,6 +23,7 @@ export const create_department = async (req: Request, res: Response, next: NextF
         const new_department = new Department({
             title,
             description,
+            campus_zone,
             image,
             contact_person_name,
             contact_person_email,

@@ -12,6 +12,11 @@ const Department_Schema = new mongoose.Schema(
         required: true,
         trim: true
     },
+    campus_zone: {
+        type: String,
+        required: true,
+        trim: true
+    },
     image: {
         type: String,
         required: true,
