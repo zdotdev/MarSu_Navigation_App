@@ -19,6 +19,9 @@ export default function Menu() {
               <a className="flex justify-center" href="/navigation">
                 Navigation
               </a>
+              <a className="flex justify-center" href="/building-info">
+                Building Info
+              </a>
             </MenubarContent>
           </MenubarMenu>
         </Menubar>

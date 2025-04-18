@@ -105,6 +105,31 @@ export default function Admin() {
       const response = await fetch(url, options);
       if (!response.ok) throw new Error("Failed operation");
 
+      let url2 = "http://localhost:6900/api/notification";
+
+      const notificationPayload = {
+        notification_title: `${
+          intent === "update"
+            ? "Updated"
+            : intent === "delete"
+            ? "Deleted"
+            : "Added"
+        } Department`,
+        notification_details: `Deparment ${payload.title} has been ${
+          intent === "update"
+            ? "updated"
+            : intent === "delete"
+            ? "deleted"
+            : "added"
+        }`,
+      };
+
+      await fetch(url2, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(notificationPayload),
+      });
+
       alert("Success!");
       window.location.reload();
     } catch (err) {
@@ -150,6 +175,31 @@ export default function Admin() {
 
       const response = await fetch(url, options);
       if (!response.ok) throw new Error("Failed operation");
+
+      let url2 = "http://localhost:6900/api/notification";
+
+      const notificationPayload = {
+        notification_title: `${
+          intent === "update"
+            ? "Updated"
+            : intent === "delete"
+            ? "Deleted"
+            : "Added"
+        } Location`,
+        notification_details: `Location ${payload.location_name} has been ${
+          intent === "update"
+            ? "updated"
+            : intent === "delete"
+            ? "deleted"
+            : "added"
+        }`,
+      };
+
+      await fetch(url2, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(notificationPayload),
+      });
 
       alert("Success!");
       window.location.reload();
