@@ -7,6 +7,7 @@ export default [
         route("dashboard", "routes/dashboard.tsx"),
         route("department/:id", "routes/department.tsx"),
         route("navigation", "routes/navigation.tsx"),
+        route("building-info", "routes/building-info.tsx"),
         route("admin", "routes/admin/admin.tsx"),
     ]),
 ] satisfies RouteConfig;
