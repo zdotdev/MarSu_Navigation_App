@@ -37,7 +37,7 @@ export default function Dashboard() {
         }}
         className="flex min-h-[52rem] flex-col md:flex-row"
       >
-        <div className="flex flex-col justify-center w-full md:w-1/2 md:h-[50rem] lg:bg-gray-200 items-center gap-8 p-8 bg-transparent">
+        <div className="flex flex-col justify-center w-full md:w-full md:h-[50rem]  items-center gap-8 p-8 bg-transparent">
           <img
             className="h-32 md:h-48 transition-transform hover:scale-105"
             src={Logo}
@@ -56,21 +56,23 @@ export default function Dashboard() {
       {/* search area */}
       <div className="flex flex-col justify-center items-center w-full h-full">
         <div className="flex flex-col justify-center items-center w-full h-40 md:h-56 bg-red-950">
-            <div className="flex flex-col justify-center items-center p-4">
-            <h1 className="text-2xl md:text-4xl text-white text-center">Looking for department?</h1>
+          <div className="flex flex-col justify-center items-center p-4">
+            <h1 className="text-2xl md:text-4xl text-white text-center">
+              Looking for department?
+            </h1>
             <input
               type="text"
               placeholder="Search department..."
               className="mt-4 px-4 py-2 w-full md:w-64 rounded-lg border-2 bg-gray-200 border-red-950 focus:outline-none focus:border-gray-300"
               onChange={(e) => {
-              const searchTerm = e.target.value.toLowerCase();
-              const filteredDepartments = departments.filter((dept) =>
-                dept.title.toLowerCase().includes(searchTerm)
-              );
-              setDepartments(filteredDepartments);
+                const searchTerm = e.target.value.toLowerCase();
+                const filteredDepartments = departments.filter((dept) =>
+                  dept.title.toLowerCase().includes(searchTerm)
+                );
+                setDepartments(filteredDepartments);
               }}
             />
-            </div>
+          </div>
         </div>
       </div>
       {/* department area */}

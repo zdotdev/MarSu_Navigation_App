@@ -8,12 +8,26 @@ export default function Theme() {
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
-    setIsDark(document.documentElement.classList.contains("dark"));
+    const savedTheme = localStorage.getItem("theme");
+    const isDarkTheme =
+      savedTheme === "dark" ||
+      (savedTheme === null &&
+        document.documentElement.classList.contains("dark"));
+
+    if (isDarkTheme) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+
+    setIsDark(isDarkTheme);
   }, []);
 
   const toggleTheme = () => {
+    const newTheme = !isDark;
     document.documentElement.classList.toggle("dark");
-    setIsDark(!isDark);
+    localStorage.setItem("theme", newTheme ? "dark" : "light");
+    setIsDark(newTheme);
   };
 
   return (
