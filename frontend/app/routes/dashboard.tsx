@@ -82,25 +82,30 @@ export default function Dashboard() {
           Campus Facilities
         </h2>
         <div className="flex flex-wrap justify-center items-center gap-4 mt-4">
-            {Object.entries(
+          {Object.entries(
             departments.reduce((acc, department) => {
-              const zone = department.campus_zone || 'Other';
+              const zone = department.campus_zone || "Other";
               if (!acc[zone]) acc[zone] = [];
               acc[zone].push(department);
               return acc;
             }, {} as Record<string, DepartmentData[]>)
-            )
+          )
             .sort(([zoneA], [zoneB]) => zoneA.localeCompare(zoneB))
             .map(([zone, zoneDepartments]) => (
               <div key={zone} className="w-full px-4">
-              <h3 className="text-2xl font-semibold mb-4 text-red-950">{zone}</h3>
-              <div className="flex flex-wrap gap-4 mb-8">
-                {zoneDepartments.map((department) => (
-                <a key={department._id} href={`department/${department._id}`}>
-                  <Card img={department.image} title={department.title} />
-                </a>
-                ))}
-              </div>
+                <h3 className="text-2xl font-semibold mb-4 text-red-950">
+                  {zone}
+                </h3>
+                <div className="flex flex-wrap gap-4 mb-8">
+                  {zoneDepartments.map((department) => (
+                    <a
+                      key={department._id}
+                      href={`department/${department._id}`}
+                    >
+                      <Card img={department.image} title={department.title} />
+                    </a>
+                  ))}
+                </div>
               </div>
             ))}
         </div>

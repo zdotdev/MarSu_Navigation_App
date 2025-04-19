@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet-routing-machine";
 import { useEffect, useState } from "react";
+import { Button } from "~/components/ui/button";
 
 type RoutingControlType = L.Routing.Control;
 
@@ -23,15 +24,15 @@ const CustomRouting: React.FC = () => {
       const routingControl: RoutingControlType = L.Routing.control({
         waypoints: [
           pointA
-            ? L.latLng(...(pointA.split(",").map(Number) as [number, number]))
-            : L.latLng(0, 0),
+        ? L.latLng(...(pointA.split(",").map(Number) as [number, number]))
+        : L.latLng(0, 0),
           pointB
-            ? L.latLng(...(pointB.split(",").map(Number) as [number, number]))
-            : L.latLng(0, 0),
+        ? L.latLng(...(pointB.split(",").map(Number) as [number, number]))
+        : L.latLng(0, 0),
         ],
         routeWhileDragging: true,
         lineOptions: {
-          styles: [{ color: "#6FA1EC", weight: 4 }],
+          styles: [{ color: "#E3A817", weight: 4 }],
           extendToWaypoints: true,
           missingRouteTolerance: 0,
         },
@@ -91,7 +92,7 @@ const SchoolMap: React.FC = () => {
     <>
       <div className="flex gap-2 p-4">
         <form
-          className="flex flex-col gap-2 items-center"
+          className="flex flex-col md:flex-row w-full gap-2 justify-center items-center"
           onSubmit={(e) => {
             saveToLocalStorage(point_a, point_b);
           }}
@@ -143,7 +144,9 @@ const SchoolMap: React.FC = () => {
               ))}
             </select>
           </div>
-          <button type="submit">Go</button>
+          <Button type="submit" className="cursor-pointer">
+            Go
+          </Button>
         </form>
       </div>
       <MapContainer
