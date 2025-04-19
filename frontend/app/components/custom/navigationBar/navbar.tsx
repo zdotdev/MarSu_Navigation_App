@@ -2,10 +2,14 @@ import Menu from "~/components/custom/menu/menu";
 import logo from "~/lib/assets/logo_1.png";
 import { Bell } from "lucide-react";
 import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "~/components/ui/hover-card";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
+
 import { useEffect, useState } from "react";
 
 interface NotificationData {
@@ -40,8 +44,8 @@ export default function Navbar() {
           </a>
         </div>
         <div className="flex items-center">
-          <HoverCard>
-            <HoverCardTrigger>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
               <div className="relative">
                 <Bell className="text-white" />
                 {notifications.length > 0 && (
@@ -50,23 +54,27 @@ export default function Navbar() {
                   </span>
                 )}
               </div>
-            </HoverCardTrigger>
-            <HoverCardContent>
-              {notifications.map((notif) => (
-                <div
-                  key={notif.notification_title}
-                  className="mb-3 p-3 border rounded-lg bg-white shadow-sm hover:bg-gray-50"
-                >
-                  <p className="font-semibold text-gray-800 mb-1">
-                    {notif.notification_title}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    {notif.notification_details}
-                  </p>
-                </div>
-              ))}
-            </HoverCardContent>
-          </HoverCard>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="flex flex-col">
+                {notifications.map((notif) => (
+                  <div
+                    key={notif.notification_title}
+                    className="flex flex-col w-90 mb-3 p-3 border rounded-lg bg-white shadow-sm hover:bg-gray-50"
+                  >
+                    <p className="font-semibold text-gray-800 mb-1">
+                      {notif.notification_title}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      {notif.notification_details}
+                    </p>
+                  </div>
+                ))}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </>
